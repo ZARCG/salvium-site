@@ -1,0 +1,247 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Salvium Protocol - FAQ</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="apple-touch-icon" sizes="180x180" href="favicon_io/apple-touch-icon.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="favicon_io/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="favicon_io/favicon-16x16.png">
+		<link rel="manifest" href="favicon_io/site.webmanifest">
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="icon" type="image/png" href="images/salvium-logo.png">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+		<noscript>
+			<link rel="stylesheet" href="assets/css/noscript.css" />
+		</noscript>
+		<style>
+			.faq dt {
+				font-size: 1.2em;
+				font-weight: 400;
+				cursor: pointer;
+				padding: 1.5em;
+				position: relative;
+				margin-bottom: 0.5em;
+				background: rgba(27, 109, 92, 0.15);
+				border-radius: 4px;
+				color: #ffffff;
+				transition: background-color 0.2s ease-in-out;
+			}
+
+			.faq dt:hover {
+				background: rgba(27, 109, 92, 0.25);
+			}
+
+			.faq dt::after {
+				content: '\f105'; /* Font Awesome arrow right */
+				font-family: 'Font Awesome 5 Free';
+				font-weight: 900;
+				position: absolute;
+				right: 1.5em;
+				transition: transform 0.3s ease;
+				color: #40E0D0;
+			}
+
+			.faq dd {
+				display: none;
+				padding: 1.5em;
+				background-color: #2e3141;
+				border-left: 3px solid #1B6D5C;
+				margin: 0 0 1.5em 0;
+				color: #ffffff;
+				border-radius: 0 4px 4px 4px;
+			}
+
+			.faq dt.open {
+				background: rgba(27, 109, 92, 0.25);
+				border-radius: 4px 4px 0 0;
+				margin-bottom: 0;
+			}
+
+			.faq dt.open::after {
+				transform: rotate(90deg);
+			}
+
+			.faq dt.open + dd {
+				border-radius: 0 0 4px 4px;
+			}
+
+			/* Responsive adjustments */
+			@media (max-width: 768px) {
+				.faq dt {
+					font-size: 1em;
+					padding: 1em;
+				}
+				.faq dd {
+					padding: 1em;
+				}
+				.faq dt::after {
+					right: 1em;
+				}
+			}
+
+			/* Top spacing adjustment */
+			body.is-preload #page-wrapper {
+				padding-top: 50px;
+			}
+
+			/* Menu pop-out text color */
+			#menu .links li a {
+				color: white;
+			}
+
+			#menu h2 {
+				color: white;
+			}
+
+			/* Make all text white */
+			body, p, h1, h2, h3, h4, h5, h6, a:not(.special), .content p {
+				color: #ffffff !important;
+			}
+			
+			.major, article p {
+				color: #ffffff !important;
+			}
+			
+			#menu .links a {
+				color: #ffffff !important;
+			}
+
+			/* Green menu button */
+			#header nav > a {
+				background-color: #40E0D0 !important;
+				color: white !important;
+			}
+
+			/* FAQ Section Headers */
+			.wrapper h3 {
+				color: #40E0D0 !important;
+				margin-top: 2em;
+				margin-bottom: 1em;
+				font-size: 1.5em;
+				letter-spacing: 0.075em;
+				text-transform: uppercase;
+			}
+
+			.wrapper h3:first-of-type {
+				margin-top: 1em;
+			}
+		</style>
+	</head>
+
+	<body class="is-preload">
+		<!-- Page Wrapper -->
+		<div id="page-wrapper">
+
+			<!-- Header -->
+			<header id="header">
+				<h1><a href="index.html"><img src="images/salvium-logo.png" alt="Salvium Logo" style="height: 20px;"></a></h1>
+				<nav>
+					<a href="#menu">Menu</a>
+				</nav>
+			</header>
+
+			<!-- Menu -->
+			<nav id="menu">
+				<div class="inner">
+					<h2>Menu</h2>
+					<ul class="links">
+						<li><a href="index.html">Home</a></li>
+						<li><a href="about.html">About</a></li>
+						<li><a href="blogs.html">Blogs</a></li>
+						<li><a href="faq.html">FAQ</a></li>
+						<li><a href="exchanges.html">Exchanges</a></li>
+						<li><a href="community.html">Community</a></li>
+					</ul>
+					<a href="#" class="close">Close</a>
+				</div>
+			</nav>
+
+			<!-- Main Content -->
+			<section id="main" class="wrapper">
+				<div class="inner">
+					<h2 class="major">Frequently Asked Questions</h2>
+
+					<h3>General Questions</h3>
+					<dl class="faq">
+						<dt onclick="toggleFAQ(this)" class="faq-question">What is Salvium?</dt>
+						<dd>For a comprehensive overview of Salvium, please visit our About page.</dd>
+
+						<dt onclick="toggleFAQ(this)" class="faq-question">Who is behind the Salvium project?</dt>
+						<dd>Salvium is developed by a team of experienced, anonymous experts in Monero, decentralized finance (DeFi), and applied cryptography. The project began as a research initiative in early 2023 and has since evolved into a full-fledged blockchain platform.</dd>
+
+						<dt onclick="toggleFAQ(this)" class="faq-question">How does Salvium differ from other privacy coins like Monero?</dt>
+						<dd>While Salvium builds on Monero's privacy features, it distinguishes itself through its focus on DeFi capabilities and regulatory compliance. Salvium introduces staking, yield generation, and features designed to meet emerging crypto regulations while maintaining strong privacy protections.</dd>
+					</dl>
+
+					<h3>Privacy and Security</h3>
+					<dl class="faq">
+						<dt onclick="toggleFAQ(this)" class="faq-question">How does Salvium ensure privacy in transactions?</dt>
+						<dd>Salvium uses a combination of Ring Signatures, Ring Confidential Transactions (RingCT), and Stealth Addresses to protect the privacy of senders, receivers, and transaction amounts.</dd>
+
+						<dt onclick="toggleFAQ(this)" class="faq-question">How does Salvium address regulatory compliance?</dt>
+						<dd>Salvium is actively working towards regulatory compliance by implementing features like Exchange Mode, refundable transactions, and view keys to meet emerging regulatory requirements while maintaining core privacy features.</dd>
+
+						<dt onclick="toggleFAQ(this)" class="faq-question">What is the purpose of the "Exchange Mode" in Salvium?</dt>
+						<dd>Exchange Mode is designed to help exchanges comply with MiCA regulations. It includes features like freezing incoming payments and the ability to return exact received funds, enabling exchanges to operate with Salvium while meeting regulatory requirements.</dd>
+					</dl>
+
+					<h3>Tokenomics and Mining</h3>
+					<dl class="faq">
+						<dt onclick="toggleFAQ(this)" class="faq-question">Was there a pre-mine for Salvium, and if so, what was its purpose?</dt>
+						<dd>Yes, Salvium had a 12.01% pre-mine:
+						<br>• Build (3.5%): Incentives for early developers and contributors.
+						<br>• Operations (8.48%): For ongoing development, enhancements, and new feature implementation, released over 24 monthly installments.</dd>
+
+						<dt onclick="toggleFAQ(this)" class="faq-question">What is the block time for Salvium?</dt>
+						<dd>The block time for Salvium is 120 seconds (2 minutes).</dd>
+
+						<dt onclick="toggleFAQ(this)" class="faq-question">What is the total supply of Salvium (SAL) tokens?</dt>
+						<dd>The initial supply of Salvium is 184.4 million SAL, with a tail emission of 3 SAL per block after the initial supply is mined.</dd>
+
+						<dt onclick="toggleFAQ(this)" class="faq-question">How can I mine Salvium?</dt>
+						<dd>Salvium uses the RandomX mining algorithm. Detailed mining instructions are available in the official documentation.</dd>
+					</dl>
+
+					<h3>Usage and Participation</h3>
+					<dl class="faq">
+						<dt onclick="toggleFAQ(this)" class="faq-question">Is Salvium compatible with hardware wallets?</dt>
+						<dd>Currently, Salvium is not compatible with hardware wallets. However, future compatibility is being explored as part of ongoing development.</dd>
+					</dl>
+
+					<h3>Technology and Features</h3>
+					<dl class="faq">
+						<dt onclick="toggleFAQ(this)" class="faq-question">What are Asynchronous Transactions in Salvium?</dt>
+						<dd>Asynchronous Transactions allow for minting coins in separate blocks from burn transactions, enabling more complex operations like yield payouts for staking.</dd>
+
+						<dt onclick="toggleFAQ(this)" class="faq-question">What is the "protocol_tx" feature in Salvium?</dt>
+						<dd>Protocol_tx is a block-level transaction used for minting new coins (except block rewards) and facilitating advanced features like stake payouts and yield distribution.</dd>
+
+						<dt onclick="toggleFAQ(this)" class="faq-question">How does staking work in Salvium?</dt>
+						<dd>Staking in Salvium allows users to lock their SAL tokens to earn rewards. Stakers receive 20% of the block reward, distributed proportionally among all active stakers based on their staked amount.</dd>
+					</dl>
+				</div>
+			</section>
+
+			<!-- Footer Placeholder -->
+			<div id="footer-placeholder"></div>
+
+		</div>
+
+		<!-- Scripts -->
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/jquery.scrollex.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
+		<script src="assets/js/footer.js"></script>
+		<script>
+			// FAQ toggle functionality
+			function toggleFAQ(element) {
+				$(element).toggleClass('open');
+				$(element).next('dd').slideToggle(200);
+			}
+		</script>
+	</body>
+</html>

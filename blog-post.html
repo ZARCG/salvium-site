@@ -1,0 +1,219 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Blog Post Title - Salvium Protocol</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<meta name="description" content="Description of your blog post for SEO" />
+		<meta name="keywords" content="salvium, privacy, cryptocurrency, blockchain" />
+		<meta name="author" content="Author Name" />
+		<meta property="og:title" content="Blog Post Title - Salvium Protocol" />
+		<meta property="og:description" content="Description of your blog post for social sharing" />
+		<meta property="og:image" content="path-to-featured-image.jpg" />
+		<link rel="apple-touch-icon" sizes="180x180" href="favicon_io/apple-touch-icon.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="favicon_io/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="favicon_io/favicon-16x16.png">
+		<link rel="manifest" href="favicon_io/site.webmanifest">
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="icon" type="image/png" href="images/salvium-logo.png">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+		<link rel="stylesheet" href="assets/css/ui-enhancements.css">
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<style>
+			/* Make all text white */
+			body, p, h1, h2, h3, h4, h5, h6, a:not(.special), .content p {
+				color: #ffffff !important;
+			}
+			
+			#menu .links a {
+				color: #ffffff !important;
+			}
+
+			/* Hide social icon labels */
+			.social-icons .label {
+				display: none;
+			}
+
+			/* Turquoise menu button */
+			#header nav > a {
+				background-color: #40E0D0 !important;
+				color: white !important;
+			}
+
+			/* Blog post specific styles */
+			.blog-header {
+				text-align: center;
+				margin-bottom: 3em;
+			}
+
+			.blog-meta {
+				color: #888 !important;
+				font-size: 0.9em;
+				margin-bottom: 2em;
+				display: flex;
+				justify-content: center;
+				gap: 2em;
+			}
+
+			.blog-content {
+				max-width: 800px;
+				margin: 0 auto;
+				line-height: 1.8;
+			}
+
+			.blog-image {
+				width: 100%;
+				height: auto;
+				margin: 2em 0;
+				border-radius: 8px;
+			}
+
+			.blog-tags {
+				margin: 3em 0;
+			}
+
+			.blog-tag {
+				display: inline-block;
+				padding: 0.3em 1em;
+				margin: 0.2em;
+				border: 1px solid #40E0D0;
+				border-radius: 20px;
+				color: #40E0D0 !important;
+				font-size: 0.9em;
+			}
+
+			.blog-navigation {
+				display: flex;
+				justify-content: space-between;
+				margin: 4em 0;
+				padding-top: 2em;
+				border-top: 1px solid rgba(255, 255, 255, 0.1);
+			}
+
+			.blog-share {
+				margin: 3em 0;
+				text-align: center;
+			}
+
+			.blog-share a {
+				margin: 0 1em;
+				font-size: 1.2em;
+			}
+
+			blockquote {
+				border-left: 4px solid #40E0D0;
+				padding-left: 1em;
+				margin: 2em 0;
+				font-style: italic;
+			}
+
+			code {
+				background: rgba(64, 224, 208, 0.1);
+				padding: 0.2em 0.4em;
+				border-radius: 3px;
+				font-family: monospace;
+			}
+
+			pre code {
+				display: block;
+				padding: 1em;
+				overflow-x: auto;
+				background: rgba(0, 0, 0, 0.3);
+			}
+		</style>
+	</head>
+	<body class="is-preload">
+
+		<!-- Page Wrapper -->
+		<div id="page-wrapper">
+
+			<!-- Header -->
+			<div id="header-container"></div>
+
+			<!-- Wrapper -->
+			<section id="wrapper">
+				<header>
+					<div class="inner">
+						<div class="blog-header">
+							<h2>Understanding Zero-Knowledge Proofs in Salvium</h2>
+							<div class="blog-meta">
+								<span><i class="far fa-calendar"></i> March 15, 2024</span>
+								<span><i class="far fa-clock"></i> 8 min read</span>
+								<span><i class="far fa-user"></i> By Alex Thompson</span>
+							</div>
+						</div>
+					</div>
+				</header>
+
+				<!-- Content -->
+				<div class="wrapper">
+					<div class="inner">
+						<div class="blog-content">
+							<!-- Featured Image -->
+							<img src="images/blog/zk-proofs.jpg" alt="Dummy Blog Headline Here" class="blog-image">
+
+							<!-- Introduction -->
+							<p>For an example of a blog post <a href="blog-post.html">click here</a>.</p>
+
+							<!-- Main Content -->
+							<h3>What are Zero-Knowledge Proofs?</h3>
+							<p>A zero-knowledge proof is a method by which one party (the prover) can prove to another party (the verifier) that a statement is true without conveying any additional information apart from the fact that the statement is indeed true.</p>
+
+							<blockquote>
+								"The ability to prove something without revealing the underlying data is revolutionary for privacy-preserving technologies." - Salvium Whitepaper
+							</blockquote>
+
+							<h3>Technical Implementation</h3>
+							<p>Here's a simple example of how ZK-proofs work in practice:</p>
+
+							<pre><code>// Example ZK-Proof Implementation
+protocol.verify(transaction, {
+    proof: zkProof,
+    publicInputs: publicData,
+    privateInputs: privateData
+});</code></pre>
+
+							<!-- Tags -->
+							<div class="blog-tags">
+								<a href="#" class="blog-tag">Zero-Knowledge</a>
+								<a href="#" class="blog-tag">Privacy</a>
+								<a href="#" class="blog-tag">Cryptography</a>
+								<a href="#" class="blog-tag">Blockchain</a>
+							</div>
+
+							<!-- Share Section -->
+							<div class="blog-share">
+								<h4>Share this post</h4>
+								<a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a>
+								<a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a>
+								<a href="#" class="icon brands fa-linkedin"><span class="label">LinkedIn</span></a>
+							</div>
+
+							<!-- Navigation -->
+							<div class="blog-navigation">
+								<a href="#" class="button small">← Previous Post</a>
+								<a href="#" class="button small">Next Post →</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- Footer -->
+			<div id="footer-container"></div>
+
+		</div>
+
+		<!-- Scripts -->
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/jquery.scrollex.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
+		<script src="assets/js/header.js"></script>
+		<script src="assets/js/footer.js"></script>
+		<script src="assets/js/ui-enhancements.js"></script>
+
+	</body>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Salvium Protocol</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Page Wrapper -->
+			<div id="page-wrapper">
+
+				<!-- Header -->
+					<header id="header" class="alt">
+						<h1><a href="index.html">Salvium</a></h1>
+						<nav>
+							<a href="#menu">Menu</a>
+						</nav>
+					</header>
+
+				<!-- Menu -->
+					<nav id="menu">
+						<div class="inner">
+							<h2>Menu</h2>
+							<ul class="links">
+								<li><a href="index.html">Home</a></li>
+								<li><a href="about.html">About</a></li>
+								<li><a href="faq.html">FAQ</a></li>
+								<li><a href="exchanges.html">Exchanges</a></li>
+								<li><a href="community.html">Community</a></li>
+							</ul>
+							<a href="#" class="close">Close</a>
+						</div>
+					</nav>
+
+				<!-- Banner -->
+					<section id="banner">
+						<div class="inner">
+        <div class="logo">
+            <img src="https://salvium.io/wp-content/uploads/2024/05/anim-salvium-WHT.gif" alt="Salvium Animation">
+        </div>
+							<h2>Take The Green Pill</h2>
+							<p>Privacy isn't just a feature. It's fundamental.</p>
+						</div>
+					</section>
+
+				<!-- Wrapper -->
+					<section id="wrapper">
+
+						<!-- One -->
+							<section id="one" class="wrapper spotlight style1">
+								<div class="inner">
+									<a href="#" class="image"><img src="images/pic01.jpg" alt="" /></a>
+									<div class="content">
+										<h2 class="major">Privacy's Next Chapter</h2>
+										<p>Combining proven privacy technology with native staking and DeFi capabilities. True financial privacy meets programmable yield.</p>
+										<a href="#" class="special">Learn more</a>
+									</div>
+								</div>
+							</section>
+
+						<!-- Two -->
+							<section id="two" class="wrapper alt spotlight style2">
+								<div class="inner">
+									<a href="#" class="image"><img src="images/pic02.jpg" alt="" /></a>
+									<div class="content">
+										<h2 class="major">Stake in the Shadows</h2>
+										<p>Generate yield without exposing your position. Because financial privacy is a fundamental right.</p>
+										<a href="#" class="special">Learn more</a>
+									</div>
+								</div>
+							</section>
+
+						<!-- Three -->
+							<section id="three" class="wrapper spotlight style3">
+								<div class="inner">
+									<a href="#" class="image"><img src="images/pic03.jpg" alt="" /></a>
+									<div class="content">
+										<h2 class="major">Privacy Meets Progress</h2>
+										<p>First protocol to unite battle-tested privacy with DeFi's innovation, built for long-term sustainability in an evolving regulatory landscape.</p>
+										<a href="#" class="special">Learn more</a>
+									</div>
+								</div>
+							</section>
+
+						<!-- Four -->
+							<section id="four" class="wrapper alt style1">
+								<div class="inner">
+									<h2 class="major">The Evolution of Private Finance</h2>
+									<p>Built on battle-tested privacy foundations to unlock the future of DeFi. Created by privacy believers, for a future where financial sovereignty and DeFi innovation coexist.</p>
+									<section class="features">
+										<article>
+											<a href="#" class="image"><img src="images/pic04.jpg" alt="" /></a>
+											<h3 class="major">Private DeFi</h3>
+											<p>True financial privacy meets programmable smart contracts, enabling a new generation of private financial applications.</p>
+											<a href="#" class="special">Learn more</a>
+										</article>
+										<article>
+											<a href="#" class="image"><img src="images/pic05.jpg" alt="" /></a>
+											<h3 class="major">Native Staking</h3>
+											<p>Earn rewards while maintaining complete privacy. Your financial moves should be yours alone.</p>
+											<a href="#" class="special">Learn more</a>
+										</article>
+										<article>
+											<a href="#" class="image"><img src="images/pic06.jpg" alt="" /></a>
+											<h3 class="major">Regulatory Ready</h3>
+											<p>Built for long-term sustainability with features that enable compliance without compromising core privacy.</p>
+											<a href="#" class="special">Learn more</a>
+										</article>
+										<article>
+											<a href="#" class="image"><img src="images/pic07.jpg" alt="" /></a>
+											<h3 class="major">Beyond Private</h3>
+											<p>Not just private transactions - a complete ecosystem for building the future of private finance.</p>
+											<a href="#" class="special">Learn more</a>
+										</article>
+									</section>
+									<ul class="actions">
+										<li><a href="#" class="button">Join the Evolution</a></li>
+									</ul>
+								</div>
+							</section>
+
+					</section>
+
+				<!-- Footer -->
+					<section id="footer">
+						<div class="inner">
+							<h2 class="major">Join the Movement</h2>
+							<p>In a world demanding both privacy and programmability, we're expanding what's possible. Not by replacing what works, but by building upon it.</p>
+							<form method="post" action="#">
+								<div class="fields">
+									<div class="field">
+										<label for="name">Name</label>
+										<input type="text" name="name" id="name" />
+									</div>
+									<div class="field">
+										<label for="email">Email</label>
+										<input type="email" name="email" id="email" />
+									</div>
+									<div class="field">
+										<label for="message">Message</label>
+										<textarea name="message" id="message" rows="4"></textarea>
+									</div>
+								</div>
+								<ul class="actions">
+									<li><input type="submit" value="Send Message" /></li>
+								</ul>
+							</form>
+							<ul class="contact">
+								<li class="icon solid fa-home">Salvium Protocol</li>
+								<li class="icon brands fa-discord"><a href="https://discord.gg/YJmdGcdtDt">Discord</a></li>
+								<li class="icon brands fa-twitter"><a href="https://x.com/salvium_io">X.com</a></li>
+								<li class="icon brands fa-github"><a href="https://github.com/somerandomcryptoguy/salvium">GitHub</a></li>
+							</ul>
+							<ul class="copyright">
+								<li>&copy; 2024 Salvium Protocol. All rights reserved.</li>
+								<li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+							</ul>
+						</div>
+					</section>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>

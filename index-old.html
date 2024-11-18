@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Salvium Protocol - Private DeFi & Staking</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        :root {
+            --primary: #1a1a1a;
+            --secondary: #4169e1;
+            --text: #ffffff;
+            --background: #121212;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            background: var(--background);
+            color: var(--text);
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+        }
+        
+        #header {
+            background: var(--primary);
+            padding: 1rem;
+            position: fixed;
+            width: 100%;
+            z-index: 100;
+        }
+        
+        .nav-menu {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        .nav-menu .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--text);
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+        
+        #banner {
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('/api/placeholder/1920/1080');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .feature-card {
+            background: var(--primary);
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .button {
+            display: inline-block;
+            padding: 0.8rem 1.6rem;
+            background: var(--secondary);
+            color: var(--text);
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+        
+        .button:hover {
+            background: #5579ff;
+        }
+        
+        #footer {
+            background: var(--primary);
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .social-links a {
+            color: var(--text);
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+        
+        .social-links a:hover {
+            color: var(--secondary);
+        }
+    </style>
+</head>
+<body>
+    <header id="header">
+        <nav class="nav-menu">
+            <a href="#" class="logo">Salvium</a>
+            <div class="nav-links">
+                <a href="#about">About</a>
+                <a href="#features">Features</a>
+                <a href="#exchanges">Exchanges</a>
+                <a href="#community">Community</a>
+                <a href="#blog">Blog</a>
+            </div>
+        </nav>
+    </header>
+
+    <section id="banner">
+        <h1>Salvium Protocol</h1>
+        <p>Cutting-edge, proof-of-work blockchain with Private DeFi, Private Staking, and Programmable Privacy</p>
+        <h2>Salvium ($SAL)</h2>
+        <p><em>noun</em> (from Latin salvus, meaning; safe, secure, salvation)<br>
+        A private, layer 1 protocol with yield generation and regulatory compliance.</p>
+        <a href="#about" class="button">Learn More</a>
+    </section>
+
+    <section id="features" class="section">
+        <h2>Key Features</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <i class="fas fa-shield-alt fa-3x"></i>
+                <h3>Private DeFi</h3>
+                <p>Seamlessly combine staking, privacy, and DeFi capabilities while navigating crypto regulations</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-lock fa-3x"></i>
+                <h3>Programmable Privacy</h3>
+                <p>Build DApps with customizable privacy levels, allowing users to control their data sharing</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-chart-line fa-3x"></i>
+                <h3>Native Staking</h3>
+                <p>Earn rewards through native staking while maintaining complete privacy</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="section">
+        <h2>About Salvium</h2>
+        <p>Salvium is taking a 'privacy-first' approach while striving to fully comply with the Markets in Crypto-Assets (MiCA) regulations. Built on a fork of Monero, it retains advanced privacy features such as stealth addresses and ring signatures while introducing groundbreaking innovations in transaction mechanics.</p>
+        <a href="#" class="button">Read Litepaper</a>
+    </section>
+
+    <footer id="footer">
+        <div class="social-links">
+            <a href="https://discord.gg/YJmdGcdtDt" target="_blank"><i class="fab fa-discord"></i></a>
+            <a href="https://x.com/salvium_io" target="_blank"><i class="fab fa-x-twitter"></i></a>
+            <a href="https://github.com/somerandomcryptoguy/salvium" target="_blank"><i class="fab fa-github"></i></a>
+        </div>
+        <p>© 2024 Salvium Protocol. All rights reserved.</p>
+    </footer>
+</body>
+</html>
