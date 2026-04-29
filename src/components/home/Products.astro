@@ -1,11 +1,36 @@
 ---
-// Products section — Salvium Wallet (GUI), Salvium CLI, plus third-party
-// wallets. Direct port from siko-ctrl's React Products section. Download
-// links go to the GitHub releases page directly; the React rewrite did
-// runtime API discovery to pick per-OS binaries, but for the Astro version
-// we'll add a build-time release fetcher in a follow-up commit so we don't
-// ship the rate-limit failure mode.
-import { href } from '../../lib/href';
+// Products section — Salvium Wallet (GUI) and Salvium CLI cards. Reads
+// build-time release data from src/data/releases.json so download links
+// point at real binaries with SHA256 digests, no runtime API call.
+//
+// Direct visual match to siko-ctrl's React Products section: glass card,
+// gradient bottom panel, OS chips, post-fork upgrade banner, macOS xattr
+// hint. Where his version did runtime API lookups, ours uses the
+// build-time manifest written by scripts/fetch-releases.mjs.
+import releases from '../../data/releases.json';
+
+interface Platform {
+  name: string;
+  url: string;
+  sha256: string | null;
+  size: number;
+}
+interface Product {
+  version: string | null;
+  releasedAt: string | null;
+  releaseUrl: string;
+  platforms: { windows: Platform | null; macos: Platform | null; linux: Platform | null };
+}
+
+const wallet = (releases.products.wallet ?? null) as Product | null;
+const cli    = (releases.products.cli    ?? null) as Product | null;
+
+// OS labels for the chip row. Each is a tuple of [label, platform key].
+const OS_KEYS: Array<['Windows' | 'macOS' | 'Linux', 'windows' | 'macos' | 'linux']> = [
+  ['Windows', 'windows'],
+  ['macOS',   'macos'],
+  ['Linux',   'linux'],
+];
 ---
 
 <section id="products" class="section-chapter relative py-20 md:py-36">
@@ -19,8 +44,7 @@ import { href } from '../../lib/href';
       </h2>
       <p class="mt-5 text-white/70 leading-relaxed">
         Self-custody your SAL. Choose between the official desktop wallet and
-        CLI built by the core team, or community-supported third-party wallets
-        for mobile and web — every option is non-custodial.
+        CLI built by the core team — both non-custodial, both open-source.
       </p>
     </div>
 
@@ -52,7 +76,7 @@ import { href } from '../../lib/href';
         <div class="px-8 pt-10 pb-6 text-center">
           <div class="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.22em] text-[color:var(--color-text-lighter)] font-mono">
             <span class="w-1.5 h-1.5 rounded-full bg-[color:var(--color-neon)] shadow-[0_0_8px_#0AEB85]"></span>
-            GUI Wallet
+            GUI Wallet {wallet?.version && (<span class="text-[color:var(--color-teal)]">· {wallet.version}</span>)}
           </div>
           <h3 class="mt-4 font-display text-2xl md:text-3xl font-semibold text-white">
             Salvium Wallet
@@ -70,19 +94,26 @@ import { href } from '../../lib/href';
             </a>
           </div>
           <div class="mt-5 flex flex-wrap justify-center gap-2">
-            <a class="os-chip" href="https://github.com/salvium/salvium-gui/releases/latest" target="_blank" rel="noopener noreferrer">Windows</a>
-            <a class="os-chip" href="https://github.com/salvium/salvium-gui/releases/latest" target="_blank" rel="noopener noreferrer">macOS</a>
-            <a class="os-chip" href="https://github.com/salvium/salvium-gui/releases/latest" target="_blank" rel="noopener noreferrer">Linux</a>
+            {OS_KEYS.map(([label, key]) => {
+              const p = wallet?.platforms?.[key] ?? null;
+              const target = p?.url ?? wallet?.releaseUrl;
+              return (
+                <a class="os-chip" href={target} target="_blank" rel="noopener noreferrer" title={p?.sha256 ? `SHA256: ${p.sha256}` : 'View all assets'}>
+                  {label}
+                </a>
+              );
+            })}
           </div>
-          <p class="mt-5 text-xs text-white/55 leading-relaxed max-w-md mx-auto">
-            <strong class="text-yellow-200/85 font-semibold">macOS:</strong> the build is unsigned. If macOS reports it as &ldquo;damaged&rdquo;, open Terminal and run:
-            <code class="block mt-2 px-3 py-2 bg-black/40 rounded text-[#40E0D0] text-[11px] break-all font-mono">xattr -cr /Applications/salvium-wallet-gui.app</code>
-          </p>
+          {wallet?.platforms?.macos?.sha256 && (
+            <p class="mt-5 text-xs text-white/55 leading-relaxed max-w-md mx-auto">
+              <strong class="text-yellow-200/85 font-semibold">macOS:</strong> the build is unsigned. If macOS reports it as &ldquo;damaged&rdquo;, open Terminal and run:
+              <code class="block mt-2 px-3 py-2 bg-black/40 rounded text-[#40E0D0] text-[11px] break-all font-mono">xattr -cr /Applications/salvium-wallet-gui.app</code>
+            </p>
+          )}
         </div>
         <div class="product-visual">
           <div class="relative z-10 flex flex-col items-center gap-3">
             <div class="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 backdrop-blur flex items-center justify-center text-white">
-              <!-- Wallet icon -->
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 7V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-2"/><path d="M3 5v14"/><path d="M21 12V7H5a2 2 0 0 0 0 4h16v6"/></svg>
             </div>
             <div class="font-mono text-[11px] uppercase tracking-[0.22em] text-white/55">
@@ -97,7 +128,7 @@ import { href } from '../../lib/href';
         <div class="px-8 pt-10 pb-6 text-center">
           <div class="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.22em] text-[color:var(--color-text-lighter)] font-mono">
             <span class="w-1.5 h-1.5 rounded-full bg-[color:var(--color-neon)] shadow-[0_0_8px_#0AEB85]"></span>
-            CLI &amp; Node
+            CLI &amp; Node {cli?.version && (<span class="text-[color:var(--color-teal)]">· {cli.version}</span>)}
           </div>
           <h3 class="mt-4 font-display text-2xl md:text-3xl font-semibold text-white">
             Salvium CLI
@@ -115,9 +146,15 @@ import { href } from '../../lib/href';
             </a>
           </div>
           <div class="mt-5 flex flex-wrap justify-center gap-2">
-            <a class="os-chip" href="https://github.com/salvium/salvium/releases/latest" target="_blank" rel="noopener noreferrer">Windows</a>
-            <a class="os-chip" href="https://github.com/salvium/salvium/releases/latest" target="_blank" rel="noopener noreferrer">macOS</a>
-            <a class="os-chip" href="https://github.com/salvium/salvium/releases/latest" target="_blank" rel="noopener noreferrer">Linux</a>
+            {OS_KEYS.map(([label, key]) => {
+              const p = cli?.platforms?.[key] ?? null;
+              const target = p?.url ?? cli?.releaseUrl;
+              return (
+                <a class="os-chip" href={target} target="_blank" rel="noopener noreferrer" title={p?.sha256 ? `SHA256: ${p.sha256}` : 'View all assets'}>
+                  {label}
+                </a>
+              );
+            })}
           </div>
         </div>
         <div class="product-visual">
@@ -132,5 +169,9 @@ import { href } from '../../lib/href';
         </div>
       </div>
     </div>
+
+    <p class="mt-8 text-center text-xs font-mono text-white/40">
+      Hover any download chip to see its SHA-256.
+    </p>
   </div>
 </section>
