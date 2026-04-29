@@ -1,0 +1,57 @@
+---
+import { SITE_TITLE } from '../consts';
+import { href } from '../lib/href';
+
+// Sticky top nav. Anchor links (e.g. /#products) jump to home-page sections;
+// real routes (e.g. /blog) navigate normally. The active route gets a teal
+// underline so users can see where they are.
+//
+// `path` is the raw pathname including the configured base (e.g.
+// /salvium-site/blog on preview). isActive() compares against the resolved
+// href() of each nav link so the comparison works in both deploy contexts.
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isActive = (link: string) => {
+  const target = href(link).replace(/\/$/, '') || '/';
+  if (target === '/' || target === href('/').replace(/\/$/, '')) return path === '/' || path === href('/').replace(/\/$/, '');
+  return path === target || path.startsWith(target + '/');
+};
+
+const NAV_LINKS = [
+  { label: 'About',     href: '/about' },
+  { label: 'Download',  href: '/download' },
+  { label: 'Pools',     href: '/pools' },
+  { label: 'Exchanges', href: '/exchanges' },
+  { label: 'Papers',    href: '/papers' },
+  { label: 'Blog',      href: '/blog' },
+  { label: 'FAQ',       href: '/faq' },
+];
+---
+
+<header class="sticky top-0 z-40 border-b border-[color:var(--color-border)] bg-[color:var(--color-bg)]/85 backdrop-blur-sm">
+  <nav class="max-w-7xl mx-auto px-5 lg:px-8 h-14 flex items-center justify-between gap-6">
+    <a href={href('/')} class="flex items-center gap-2 text-white font-semibold tracking-tight hover:text-[color:var(--color-teal)] transition-colors">
+      <span class="text-[color:var(--color-teal)] font-mono text-xs uppercase tracking-[0.22em]">/</span>
+      {SITE_TITLE}
+    </a>
+
+    <div class="hidden md:flex items-center gap-1 text-sm">
+      {NAV_LINKS.map((link) => (
+        <a
+          href={href(link.href)}
+          class:list={[
+            'px-3 py-2 rounded-md transition-colors',
+            isActive(link.href)
+              ? 'text-white bg-white/[0.04]'
+              : 'text-[color:var(--color-text-muted)] hover:text-white hover:bg-white/[0.03]',
+          ]}
+        >
+          {link.label}
+        </a>
+      ))}
+    </div>
+
+    <a href={href('/donate')} class="btn-primary text-sm hidden sm:inline-flex">
+      Donate
+    </a>
+  </nav>
+</header>

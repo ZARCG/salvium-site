@@ -1,0 +1,187 @@
+/* Salvium global stylesheet — Tailwind v4 + design tokens.
+ *
+ * Tailwind v4 uses @theme directives in CSS instead of tailwind.config.js.
+ * Tokens defined here become utility classes automatically (e.g. --color-teal
+ * → bg-teal, text-teal). The reset/base styles below mirror the dark, neon
+ * brand of the site without forcing a heavy template.
+ */
+
+@import "tailwindcss";
+
+@theme {
+  /* Brand colours — kept in sync with src/consts.ts so canvas/JS effects can
+     read the same values via getComputedStyle on :root. */
+  --color-teal: #00bfa5;
+  --color-teal-light: #40e0d0;
+  --color-bg: #1e1e1e;
+  --color-bg-deep: #0b272c;
+  --color-bg-card: rgba(255, 255, 255, 0.04);
+  --color-text: #e0e0e0;
+  --color-text-muted: #9ca3af;
+  --color-border: rgba(255, 255, 255, 0.08);
+
+  /* Typography — system stack with Mono accent. Skipping Google Fonts entirely
+     so the site has no third-party render-blocking requests on first paint. */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: ui-monospace, 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace;
+  --font-display: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-feature-settings: 'cv02', 'cv03', 'cv04';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  min-height: 100vh;
+}
+
+/* Subtle ambient gradient — adds depth without the heavy canvas effect.
+   The React rewrite used a full <canvas> network animation; we'll add that
+   back as a React island only on the homepage in Phase 2. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 0%, rgba(0, 191, 165, 0.08), transparent 40%),
+    radial-gradient(circle at 80% 100%, rgba(64, 224, 208, 0.05), transparent 40%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Gradient text used for headlines. */
+.gradient-text {
+  background: linear-gradient(45deg, var(--color-teal), var(--color-teal-light));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
+}
+
+a {
+  color: var(--color-teal-light);
+  text-decoration: none;
+  transition: color 150ms ease;
+}
+a:hover { color: var(--color-teal); }
+
+/* Prose — for long-form blog content rendered from markdown. Tight rhythm,
+   clear hierarchy, generous space for reading. */
+.prose {
+  max-width: 70ch;
+  line-height: 1.7;
+}
+.prose h1, .prose h2, .prose h3, .prose h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin: 2rem 0 1rem;
+  color: #fff;
+  line-height: 1.2;
+}
+.prose h2 { font-size: 1.875rem; }
+.prose h3 { font-size: 1.5rem; }
+.prose p, .prose ul, .prose ol, .prose blockquote { margin: 0 0 1.25em; }
+.prose ul, .prose ol { padding-left: 1.5em; }
+.prose li { margin-bottom: 0.4em; }
+.prose strong { color: #fff; font-weight: 600; }
+.prose code {
+  font-family: var(--font-mono);
+  background: rgba(0, 191, 165, 0.08);
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  font-size: 0.9em;
+  color: var(--color-teal-light);
+}
+.prose pre {
+  font-family: var(--font-mono);
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--color-border);
+  padding: 1em;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 1.5em 0;
+}
+.prose pre code {
+  background: transparent;
+  padding: 0;
+  color: inherit;
+}
+.prose blockquote {
+  border-left: 3px solid var(--color-teal);
+  padding-left: 1em;
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+.prose img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 1.5em 0;
+}
+.prose hr {
+  border: none;
+  border-top: 1px solid var(--color-border);
+  margin: 2em 0;
+}
+
+/* Glass card surface used for downloads, exchanges, pools, etc. */
+.glass {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Buttons — borrowed pattern from the React rewrite, simplified. */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.65em 1.25em;
+  background: var(--color-teal);
+  color: #000;
+  font-weight: 600;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background 150ms ease;
+}
+.btn-primary:hover { background: var(--color-teal-light); color: #000; }
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.65em 1.25em;
+  background: transparent;
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color 150ms ease, color 150ms ease;
+}
+.btn-ghost:hover { border-color: var(--color-teal); color: #fff; }
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

@@ -1,0 +1,67 @@
+// Helpers for working with the blog collection. Centralised so the slug-
+// extraction and date-derivation logic is identical across the post pages,
+// the index, the RSS feed, and the redirect generator.
+
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import { href } from './href';
+
+export interface ResolvedPost {
+  /** Original collection entry (still needed by render()). */
+  entry: CollectionEntry<'blog'>;
+  /** URL slug WITHOUT the date prefix — e.g. "salvium-assets-hard-fork". */
+  slug: string;
+  /** Resolved publication date — frontmatter wins, falls back to filename. */
+  date: Date;
+  /** Single normalised category string. */
+  category: string;
+  /** Permalink path under the site root. */
+  href: string;
+  /** Optional Jekyll-style legacy permalink for backward compat. */
+  legacyHref: string | null;
+}
+
+const FILENAME_DATE_RE = /^(\d{4})-(\d{2})-(\d{2})-(.+)$/;
+
+export function resolvePost(entry: CollectionEntry<'blog'>): ResolvedPost {
+  // entry.id is the path stem (e.g. "2026-03-24-salvium-assets-hard-fork").
+  // The Jekyll filename convention encodes the publish date — use it to
+  // derive the URL slug AND fall back as the post date if frontmatter
+  // doesn't set one. Some files have a stray space before .md (already
+  // present in two existing posts); the .trim() defensively handles that.
+  const m = FILENAME_DATE_RE.exec(entry.id.trim());
+  if (!m) {
+    return {
+      entry,
+      slug: entry.id,
+      date: entry.data.date ?? new Date(),
+      category: pickCategory(entry),
+      href: href(`/blog/${entry.id}/`),
+      legacyHref: null,
+    };
+  }
+  const [, yyyy, mm, dd, slug] = m;
+  const fallbackDate = new Date(`${yyyy}-${mm}-${dd}T12:00:00Z`);
+  return {
+    entry,
+    slug,
+    date: entry.data.date ?? fallbackDate,
+    category: pickCategory(entry),
+    href: href(`/blog/${slug}/`),
+    legacyHref: href(`/blog/${yyyy}/${mm}/${dd}/${slug}/`),
+  };
+}
+
+function pickCategory(entry: CollectionEntry<'blog'>): string {
+  // Some posts use `category`, others `categories` (often space-separated).
+  // Take the first token of whichever exists, default to "Update".
+  const raw = entry.data.category || entry.data.categories || '';
+  return raw.split(/[\s,]+/).filter(Boolean)[0] || 'Update';
+}
+
+export async function getResolvedPosts(): Promise<ResolvedPost[]> {
+  const entries = await getCollection('blog');
+  return entries
+    .map(resolvePost)
+    .sort((a, b) => b.date.valueOf() - a.date.valueOf());
+}

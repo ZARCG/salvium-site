@@ -1,0 +1,63 @@
+---
+// Site <head> shared across every page. Importing global.css here ensures
+// every page in the site picks up the Tailwind v4 + design token bundle
+// without any per-page boilerplate.
+import '../styles/global.css';
+import { SITE_TITLE, SITE_DESCRIPTION, SITE_URL } from '../consts';
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** Absolute URL to the og:image. Optional — falls back to the site banner. */
+  ogImage?: string;
+  /** Set to true for blog posts so search results show post-specific meta. */
+  article?: boolean;
+}
+
+const {
+  title,
+  description = SITE_DESCRIPTION,
+  ogImage = `${SITE_URL}/brand/banner.jpg`,
+  article = false,
+} = Astro.props;
+
+// Canonical URL — Astro.site is set in astro.config.mjs to https://salvium.io.
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+
+// Page <title>: append the site name unless the page IS the site root.
+const fullTitle = title ? `${title} · ${SITE_TITLE}` : `${SITE_TITLE} · The Future of Private DeFi`;
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="generator" content={Astro.generator} />
+
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonicalURL} />
+
+<!-- Favicons + manifest. Files live under public/favicon/ -->
+<link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon/favicon-96x96.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+<link rel="manifest" href="/manifest.json" />
+<meta name="theme-color" content="#1e1e1e" />
+
+<!-- RSS + sitemap discovery -->
+<link rel="alternate" type="application/rss+xml" title={SITE_TITLE} href={`${SITE_URL}/rss.xml`} />
+<link rel="sitemap" href="/sitemap-index.xml" />
+
+<!-- Open Graph / Twitter -->
+<meta property="og:type" content={article ? 'article' : 'website'} />
+<meta property="og:site_name" content={SITE_TITLE} />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:image" content={ogImage} />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={fullTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />

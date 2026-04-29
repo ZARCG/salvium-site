@@ -1,0 +1,30 @@
+---
+// Dynamic route for individual blog posts. Strips the YYYY-MM-DD prefix
+// from filenames so URLs are clean (/blog/<slug>/ instead of
+// /blog/<date>-<slug>/), and feeds resolved metadata into the BlogPost
+// layout.
+import { render } from 'astro:content';
+import BlogPost from '../../layouts/BlogPost.astro';
+import { getResolvedPosts, type ResolvedPost } from '../../lib/posts';
+
+export async function getStaticPaths() {
+  const resolved = await getResolvedPosts();
+  return resolved.map((post) => ({
+    params: { slug: post.slug },
+    props: post,
+  }));
+}
+
+const post = Astro.props as ResolvedPost;
+const { Content } = await render(post.entry);
+---
+
+<BlogPost
+  title={post.entry.data.title}
+  description={post.entry.data.excerpt}
+  date={post.date}
+  category={post.category}
+  image={post.entry.data.image}
+>
+  <Content />
+</BlogPost>

@@ -1,0 +1,87 @@
+name: Deploy site to GitHub Pages
+
+# Triggers:
+#   push to main → production-style deploy with the env vars below.
+#   workflow_dispatch → manual run from the Actions tab (handy for retries).
+#
+# To cut over to salvium.io later, override SITE_URL/SITE_BASE at the env
+# level (e.g. via a manual workflow_dispatch input or by editing them here).
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      site_url:
+        description: 'SITE_URL (override for production cutover)'
+        required: false
+        default: 'https://zarcg.github.io'
+      site_base:
+        description: 'SITE_BASE (override for production cutover)'
+        required: false
+        default: '/salvium-site'
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      # Actions pinned to commit SHAs because this workflow has id-token: write
+      # — a compromised tagged release could mint OIDC tokens against our
+      # production environment. Tags are in comments for human review and
+      # Dependabot can keep these current.
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4
+
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020  # v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build site
+        env:
+          SITE_URL: ${{ inputs.site_url || 'https://zarcg.github.io' }}
+          SITE_BASE: ${{ inputs.site_base || '/salvium-site' }}
+        run: npm run build
+
+      - name: Validate build artifact
+        # Smoke-check the bundle before upload. Catches: empty build, broken
+        # blog index, missing sitemap entries, sitemap drift from posts.
+        run: |
+          set -euo pipefail
+          test -s dist/index.html
+          test -s dist/blog/index.html
+          test -s dist/sitemap-index.xml
+          test -s dist/rss.xml
+          posts=$(find src/content/blog -maxdepth 1 -name '*.md' -o -name '*.mdx' | wc -l)
+          stubs=$(find dist/blog -mindepth 2 -maxdepth 2 -name 'index.html' | wc -l)
+          sitemap_posts=$(grep -oE '<loc>[^<]+/blog/[^/]+/</loc>' dist/sitemap-0.xml | wc -l)
+          echo "posts=$posts stubs=$stubs sitemap_posts=$sitemap_posts"
+          [ "$posts" -eq "$stubs" ]
+          [ "$posts" -eq "$sitemap_posts" ]
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa  # v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e  # v4
