@@ -78,26 +78,28 @@ const NAV_LINKS = [
     </div>
   </nav>
 
-  <!-- Mobile drawer — hidden by default, slides in from the right when toggled -->
+  <!-- Mobile drawer. Hidden by default; the inline script below toggles
+       data-open which triggers the CSS transition. Inline styles for
+       position/background so we don't depend on any utility class
+       generating during build (the previous build had the drawer ending
+       at content height with the page bleeding through). 100dvh handles
+       mobile browsers' dynamic viewport / URL-bar collapse. -->
   <div
     id="mobile-drawer"
-    class="mobile-drawer fixed inset-0 z-50 flex flex-col md:hidden invisible opacity-0 translate-y-2 transition-all duration-200"
+    class="md:hidden"
     role="dialog"
     aria-modal="true"
     aria-label="Site menu"
-    style="padding-top: 3.5rem;"
   >
-    <nav class="flex-1 overflow-y-auto px-5 py-8">
-      <ul class="space-y-1 list-none p-0 m-0">
+    <nav class="drawer-nav">
+      <ul>
         {NAV_LINKS.map((link) => (
           <li>
             <a
               href={href(link.href)}
               class:list={[
-                'block px-4 py-3 rounded-lg text-base font-medium transition-colors',
-                isActive(link.href)
-                  ? 'text-white bg-white/[0.06] border border-white/10'
-                  : 'text-white/80 hover:text-white hover:bg-white/[0.04]',
+                'drawer-link',
+                isActive(link.href) ? 'is-active' : '',
               ]}
             >
               {link.label}
@@ -106,13 +108,84 @@ const NAV_LINKS = [
         ))}
       </ul>
     </nav>
-    <div class="px-5 pb-8" style="padding-bottom: calc(2rem + env(safe-area-inset-bottom));">
+    <div class="drawer-cta">
       <a href={href('/donate')} class="btn-primary w-full justify-center">
         Donate
       </a>
     </div>
   </div>
 </header>
+
+<style>
+  /* Drawer positioning + background — inline to avoid any Tailwind v4
+     class-generation timing issues. data-open is added by the toggle
+     script. */
+  #mobile-drawer {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    /* dvh handles mobile browsers shrinking the viewport when the URL
+       bar collapses; vh fallback for older browsers. */
+    height: 100vh;
+    height: 100dvh;
+    padding-top: 3.5rem;
+    background:
+      radial-gradient(900px 600px at 10% -10%, rgba(0, 191, 165, 0.18), transparent 60%),
+      radial-gradient(700px 500px at 110% 110%, rgba(10, 235, 133, 0.10), transparent 55%),
+      rgba(13, 13, 13, 0.98);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(8px);
+    transition: opacity 200ms ease, transform 200ms ease, visibility 0s linear 200ms;
+    pointer-events: none;
+  }
+  #mobile-drawer[data-open="true"] {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    transition: opacity 200ms ease, transform 200ms ease, visibility 0s linear 0s;
+    pointer-events: auto;
+  }
+  #mobile-drawer .drawer-nav {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    padding: 1.5rem 1.25rem;
+  }
+  #mobile-drawer .drawer-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  #mobile-drawer .drawer-link {
+    display: block;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.8);
+    border: 1px solid transparent;
+    transition: color 150ms ease, background 150ms ease, border-color 150ms ease;
+  }
+  #mobile-drawer .drawer-link:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.04);
+  }
+  #mobile-drawer .drawer-link.is-active {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.10);
+  }
+  #mobile-drawer .drawer-cta {
+    flex: 0 0 auto;
+    padding: 0 1.25rem 1.5rem;
+    padding-bottom: calc(1.5rem + env(safe-area-inset-bottom));
+  }
+</style>
 
 <script is:inline>
   (function () {
@@ -122,18 +195,14 @@ const NAV_LINKS = [
     const iconClose = document.getElementById('menu-icon-close');
     if (!toggle || !drawer) return;
 
-    const VISIBLE = ['visible', 'opacity-100', 'translate-y-0'];
-    const HIDDEN = ['invisible', 'opacity-0', 'translate-y-2'];
-
     function setOpen(open) {
       toggle.setAttribute('aria-expanded', String(open));
       toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-      VISIBLE.forEach((c) => drawer.classList.toggle(c, open));
-      HIDDEN.forEach((c) => drawer.classList.toggle(c, !open));
+      // The drawer's open/closed state is driven by data-open in CSS so
+      // we never have to fight Tailwind utility class generation.
+      drawer.dataset.open = open ? 'true' : 'false';
       iconOpen?.classList.toggle('hidden', open);
       iconClose?.classList.toggle('hidden', !open);
-      // Lock body scroll while drawer is open so background content
-      // doesn't scroll under finger swipes.
       document.body.style.overflow = open ? 'hidden' : '';
     }
 
@@ -142,10 +211,7 @@ const NAV_LINKS = [
       setOpen(!isOpen);
     });
 
-    // Close on link click so navigating in the drawer doesn't leave it open
     drawer.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
-
-    // Esc + viewport widening close the drawer cleanly
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });
     window.matchMedia('(min-width: 768px)').addEventListener('change', (e) => { if (e.matches) setOpen(false); });
   })();
