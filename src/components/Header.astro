@@ -1,5 +1,5 @@
 ---
-import { SITE_TITLE } from '../consts';
+import Logo from './Logo.astro';
 import { href } from '../lib/href';
 
 // Sticky top nav. Anchor links (e.g. /#products) jump to home-page sections;
@@ -29,9 +29,8 @@ const NAV_LINKS = [
 
 <header class="sticky top-0 z-40 border-b border-[color:var(--color-border)] bg-[color:var(--color-bg)]/85 backdrop-blur-sm">
   <nav class="max-w-7xl mx-auto px-5 lg:px-8 h-14 flex items-center justify-between gap-6">
-    <a href={href('/')} class="flex items-center gap-2 text-white font-semibold tracking-tight hover:text-[color:var(--color-teal)] transition-colors">
-      <span class="text-[color:var(--color-teal)] font-mono text-xs uppercase tracking-[0.22em]">/</span>
-      {SITE_TITLE}
+    <a href={href('/')} class="flex items-center hover:opacity-90 transition-opacity" aria-label="Salvium home">
+      <Logo size="sm" />
     </a>
 
     <div class="hidden md:flex items-center gap-1 text-sm">
