@@ -1,7 +1,5 @@
 ---
-// Roadmap — four phases, vertically stacked on mobile, side-by-side on
-// desktop. Status chip uses different teal opacities to differentiate
-// completed / in-progress / upcoming.
+import Reveal from '../Reveal.astro';
 import { ROADMAP } from '../../data/seed.js';
 
 function statusLabel(s: string) {
@@ -27,7 +25,8 @@ function statusLabel(s: string) {
       {ROADMAP.map((r, i) => {
         const status = statusLabel(r.status);
         return (
-          <div class="glass p-6 h-full flex flex-col">
+          <Reveal delay={i * 100}>
+            <div class="glass p-6 h-full flex flex-col">
             <div class="flex items-center justify-between">
               <span class="font-mono text-[10px] uppercase tracking-[0.22em] text-white/40">
                 {r.phase}
@@ -45,7 +44,8 @@ function statusLabel(s: string) {
                 </li>
               ))}
             </ul>
-          </div>
+            </div>
+          </Reveal>
         );
       })}
     </div>

@@ -1,6 +1,5 @@
 ---
-// Privacy primitive flow — six chips wired together with hairline connectors,
-// rendered as a horizontal flow on desktop / vertical on mobile.
+import Reveal from '../Reveal.astro';
 import { PRIVACY_FLOW } from '../../data/seed.js';
 ---
 
@@ -23,16 +22,18 @@ import { PRIVACY_FLOW } from '../../data/seed.js';
 
     <div class="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
       {PRIVACY_FLOW.map((p, i) => (
-        <div class="glass p-5 card-hover">
-          <div class="flex items-center justify-between mb-3">
-            <span class="pill">{String(i + 1).padStart(2, '0')}</span>
-            <span class="font-mono text-[10px] uppercase tracking-[0.22em] text-white/40">
-              Layer
-            </span>
+        <Reveal delay={i * 80}>
+          <div class="glass p-5 card-hover h-full">
+            <div class="flex items-center justify-between mb-3">
+              <span class="pill">{String(i + 1).padStart(2, '0')}</span>
+              <span class="font-mono text-[10px] uppercase tracking-[0.22em] text-white/40">
+                Layer
+              </span>
+            </div>
+            <h3 class="font-display text-lg font-semibold text-white">{p.name}</h3>
+            <p class="mt-2 text-sm text-white/60 leading-relaxed">{p.desc}</p>
           </div>
-          <h3 class="font-display text-lg font-semibold text-white">{p.name}</h3>
-          <p class="mt-2 text-sm text-white/60 leading-relaxed">{p.desc}</p>
-        </div>
+        </Reveal>
       ))}
     </div>
   </div>

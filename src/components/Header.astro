@@ -2,13 +2,11 @@
 import Logo from './Logo.astro';
 import { href } from '../lib/href';
 
-// Sticky top nav. Anchor links (e.g. /#products) jump to home-page sections;
-// real routes (e.g. /blog) navigate normally. The active route gets a teal
-// underline so users can see where they are.
-//
-// `path` is the raw pathname including the configured base (e.g.
-// /salvium-site/blog on preview). isActive() compares against the resolved
-// href() of each nav link so the comparison works in both deploy contexts.
+// Sticky top nav with a desktop bar (md+) and a mobile drawer (<md).
+// Drawer toggle is a tiny inline script — vanilla JS, no React island,
+// no hydration cost. The drawer surface uses the .mobile-drawer class
+// from global.css so the teal-tinted radial background matches
+// siko-ctrl's React drawer.
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 const isActive = (link: string) => {
   const target = href(link).replace(/\/$/, '') || '/';
@@ -24,18 +22,21 @@ const NAV_LINKS = [
   { label: 'Papers',    href: '/papers' },
   { label: 'Blog',      href: '/blog' },
   { label: 'FAQ',       href: '/faq' },
+  { label: 'Tools',     href: '/tools' },
+  { label: 'Roadmap',   href: '/roadmap' },
+  { label: 'Community', href: '/community' },
 ];
 ---
 
 <header class="sticky top-0 z-40 border-b border-[color:var(--color-border)] bg-[color:var(--color-bg)]/85 backdrop-blur-sm">
   <nav class="max-w-7xl mx-auto px-5 lg:px-8 h-14 flex items-center justify-between gap-6">
     <a href={href('/')} class="flex items-center hover:opacity-90 transition-opacity" aria-label="Salvium home">
-      <!-- 20% smaller than the default sm (h-7 = 28px). -->
       <Logo className="!h-[22px]" />
     </a>
 
+    <!-- Desktop nav -->
     <div class="hidden md:flex items-center gap-1 text-sm">
-      {NAV_LINKS.map((link) => (
+      {NAV_LINKS.slice(0, 7).map((link) => (
         <a
           href={href(link.href)}
           class:list={[
@@ -50,14 +51,102 @@ const NAV_LINKS = [
       ))}
     </div>
 
-    <a
-      href={href('/donate')}
-      class="btn-primary hidden sm:inline-flex !text-[0.72rem] !py-[0.56rem] !px-[1.12rem]"
-    >
-      <!-- 20% smaller than .btn-primary defaults (font 0.9rem → 0.72rem,
-           padding 0.7/1.4rem → 0.56/1.12rem). The ! prefix raises Tailwind
-           specificity above the global class. -->
-      Donate
-    </a>
+    <div class="flex items-center gap-2">
+      <a
+        href={href('/donate')}
+        class="btn-primary hidden sm:inline-flex !text-[0.72rem] !py-[0.56rem] !px-[1.12rem]"
+      >
+        Donate
+      </a>
+
+      <!-- Mobile menu button — visible <md only -->
+      <button
+        type="button"
+        id="mobile-menu-toggle"
+        aria-expanded="false"
+        aria-controls="mobile-drawer"
+        aria-label="Open menu"
+        class="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-md border border-white/10 bg-white/[0.02] text-white hover:bg-white/[0.06] transition-colors"
+      >
+        <svg id="menu-icon-open" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+        <svg id="menu-icon-close" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="hidden">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
   </nav>
+
+  <!-- Mobile drawer — hidden by default, slides in from the right when toggled -->
+  <div
+    id="mobile-drawer"
+    class="mobile-drawer fixed inset-0 z-50 flex flex-col md:hidden invisible opacity-0 translate-y-2 transition-all duration-200"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Site menu"
+    style="padding-top: 3.5rem;"
+  >
+    <nav class="flex-1 overflow-y-auto px-5 py-8">
+      <ul class="space-y-1 list-none p-0 m-0">
+        {NAV_LINKS.map((link) => (
+          <li>
+            <a
+              href={href(link.href)}
+              class:list={[
+                'block px-4 py-3 rounded-lg text-base font-medium transition-colors',
+                isActive(link.href)
+                  ? 'text-white bg-white/[0.06] border border-white/10'
+                  : 'text-white/80 hover:text-white hover:bg-white/[0.04]',
+              ]}
+            >
+              {link.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+    <div class="px-5 pb-8" style="padding-bottom: calc(2rem + env(safe-area-inset-bottom));">
+      <a href={href('/donate')} class="btn-primary w-full justify-center">
+        Donate
+      </a>
+    </div>
+  </div>
 </header>
+
+<script is:inline>
+  (function () {
+    const toggle = document.getElementById('mobile-menu-toggle');
+    const drawer = document.getElementById('mobile-drawer');
+    const iconOpen = document.getElementById('menu-icon-open');
+    const iconClose = document.getElementById('menu-icon-close');
+    if (!toggle || !drawer) return;
+
+    const VISIBLE = ['visible', 'opacity-100', 'translate-y-0'];
+    const HIDDEN = ['invisible', 'opacity-0', 'translate-y-2'];
+
+    function setOpen(open) {
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      VISIBLE.forEach((c) => drawer.classList.toggle(c, open));
+      HIDDEN.forEach((c) => drawer.classList.toggle(c, !open));
+      iconOpen?.classList.toggle('hidden', open);
+      iconClose?.classList.toggle('hidden', !open);
+      // Lock body scroll while drawer is open so background content
+      // doesn't scroll under finger swipes.
+      document.body.style.overflow = open ? 'hidden' : '';
+    }
+
+    toggle.addEventListener('click', () => {
+      const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+      setOpen(!isOpen);
+    });
+
+    // Close on link click so navigating in the drawer doesn't leave it open
+    drawer.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+
+    // Esc + viewport widening close the drawer cleanly
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });
+    window.matchMedia('(min-width: 768px)').addEventListener('change', (e) => { if (e.matches) setOpen(false); });
+  })();
+</script>

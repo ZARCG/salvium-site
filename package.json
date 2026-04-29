@@ -10,6 +10,7 @@
     "dev": "astro dev",
     "prebuild": "node scripts/fetch-releases.mjs",
     "build": "astro build",
+    "postbuild": "node scripts/build-redirects.mjs",
     "preview": "astro preview",
     "astro": "astro"
   },
