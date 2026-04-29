@@ -45,6 +45,16 @@ const fullTitle = title ? `${title} · ${SITE_TITLE}` : `${SITE_TITLE} · The Fu
 <link rel="manifest" href="/manifest.json" />
 <meta name="theme-color" content="#1e1e1e" />
 
+<!-- Fonts: Poppins (display), Roboto (body), Roboto Mono (accents). Matches
+     the React rewrite. preconnect saves the DNS round-trip; the swap
+     display avoids invisible-text-during-load. -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@400;500;700&display=swap"
+/>
+
 <!-- RSS + sitemap discovery -->
 <link rel="alternate" type="application/rss+xml" title={SITE_TITLE} href={`${SITE_URL}/rss.xml`} />
 <link rel="sitemap" href="/sitemap-index.xml" />

@@ -1,0 +1,19 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import { ABOUT_CONTENT } from '../data/pages.js';
+---
+
+<Layout title="About" description={ABOUT_CONTENT.intro.slice(0, 160)}>
+  <PageHero eyebrow={ABOUT_CONTENT.eyebrow} title={ABOUT_CONTENT.title} intro={ABOUT_CONTENT.intro} />
+  <section class="relative pb-16">
+    <div class="max-w-4xl mx-auto px-5 lg:px-8 grid gap-5">
+      {ABOUT_CONTENT.sections.map((s) => (
+        <article class="glass p-6 md:p-8">
+          <h2 class="font-display text-xl md:text-2xl font-semibold text-white">{s.title}</h2>
+          <p class="mt-3 text-white/70 leading-relaxed">{s.body}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+</Layout>

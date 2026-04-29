@@ -31,24 +31,34 @@ export function resolvePost(entry: CollectionEntry<'blog'>): ResolvedPost {
   // present in two existing posts); the .trim() defensively handles that.
   const m = FILENAME_DATE_RE.exec(entry.id.trim());
   if (!m) {
+    // Filename without a date prefix — fall back to today's date and the
+    // raw filename as the slug. Should not happen for production posts.
+    const today = new Date();
+    const yyyy = String(today.getUTCFullYear());
+    const mm = String(today.getUTCMonth() + 1).padStart(2, '0');
+    const dd = String(today.getUTCDate()).padStart(2, '0');
     return {
       entry,
       slug: entry.id,
-      date: entry.data.date ?? new Date(),
+      date: entry.data.date ?? today,
       category: pickCategory(entry),
-      href: href(`/blog/${entry.id}/`),
+      href: href(`/blog/${yyyy}/${mm}/${dd}/${entry.id}/`),
       legacyHref: null,
     };
   }
   const [, yyyy, mm, dd, slug] = m;
   const fallbackDate = new Date(`${yyyy}-${mm}-${dd}T12:00:00Z`);
+  // Canonical URL is Jekyll-style (matches the existing live site so
+  // Twitter / AMA / external links stay valid). The legacy slug-only form
+  // (`/blog/<slug>/`) is no longer emitted — Phase 1 used it briefly but
+  // we never published the preview as canonical, so no redirect needed.
   return {
     entry,
     slug,
     date: entry.data.date ?? fallbackDate,
     category: pickCategory(entry),
-    href: href(`/blog/${slug}/`),
-    legacyHref: href(`/blog/${yyyy}/${mm}/${dd}/${slug}/`),
+    href: href(`/blog/${yyyy}/${mm}/${dd}/${slug}/`),
+    legacyHref: null,
   };
 }
 

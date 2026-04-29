@@ -1,0 +1,136 @@
+---
+// Products section — Salvium Wallet (GUI), Salvium CLI, plus third-party
+// wallets. Direct port from siko-ctrl's React Products section. Download
+// links go to the GitHub releases page directly; the React rewrite did
+// runtime API discovery to pick per-OS binaries, but for the Astro version
+// we'll add a build-time release fetcher in a follow-up commit so we don't
+// ship the rate-limit failure mode.
+import { href } from '../../lib/href';
+---
+
+<section id="products" class="section-chapter relative py-20 md:py-36">
+  <div class="max-w-7xl mx-auto px-5 lg:px-8">
+    <div class="text-center max-w-3xl mx-auto">
+      <div class="font-mono text-[11px] uppercase tracking-[0.32em] text-[color:var(--color-teal)]">
+        / Products
+      </div>
+      <h2 class="chapter-title mt-5">
+        Salvium <span class="neon-text">Wallets</span>
+      </h2>
+      <p class="mt-5 text-white/70 leading-relaxed">
+        Self-custody your SAL. Choose between the official desktop wallet and
+        CLI built by the core team, or community-supported third-party wallets
+        for mobile and web — every option is non-custodial.
+      </p>
+    </div>
+
+    <!-- Post-fork upgrade banner -->
+    <div role="alert" aria-live="polite"
+         class="mt-10 max-w-4xl mx-auto rounded-2xl border border-yellow-500/30 bg-gradient-to-br from-yellow-100/[0.06] via-yellow-200/[0.03] to-transparent p-5 backdrop-blur">
+      <div class="flex items-start gap-3 text-yellow-100/90 text-left">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+             class="w-5 h-5 flex-shrink-0 mt-0.5 text-yellow-300" aria-hidden="true">
+          <path fill-rule="evenodd" d="M10.29 3.86a2.25 2.25 0 013.42 0l7.42 9.11c1.24 1.52.13 3.78-1.71 3.78H4.58c-1.84 0-2.95-2.26-1.71-3.78l7.42-9.11zM12 8.25a.75.75 0 01.75.75v4.5a.75.75 0 01-1.5 0V9a.75.75 0 01.75-.75zm0 9a.9.9 0 100-1.8.9.9 0 000 1.8z" clip-rule="evenodd"/>
+        </svg>
+        <div>
+          <p class="font-semibold text-yellow-200">
+            Upgrade required: legacy wallets and nodes no longer work.
+          </p>
+          <p class="mt-1.5 text-sm text-yellow-100/85 leading-relaxed">
+            The Salvium hard fork completed at block <strong>465,000</strong> on
+            <strong>13 April 2026</strong>. Legacy GUI wallets and any CLI build older
+            than <strong>v1.1.x</strong> can no longer sync with the network. Pick the
+            latest GUI Wallet or CLI below.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-10 grid md:grid-cols-2 gap-5">
+      <!-- Salvium Wallet (GUI) -->
+      <div class="product-card h-full">
+        <div class="px-8 pt-10 pb-6 text-center">
+          <div class="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.22em] text-[color:var(--color-text-lighter)] font-mono">
+            <span class="w-1.5 h-1.5 rounded-full bg-[color:var(--color-neon)] shadow-[0_0_8px_#0AEB85]"></span>
+            GUI Wallet
+          </div>
+          <h3 class="mt-4 font-display text-2xl md:text-3xl font-semibold text-white">
+            Salvium Wallet
+          </h3>
+          <p class="mt-3 text-white/65 max-w-md mx-auto">
+            The official desktop wallet. Manage SAL, stake, and transact privately
+            on Windows, macOS, and Linux.
+          </p>
+          <div class="mt-6 flex flex-wrap justify-center gap-3">
+            <a class="btn-primary" href="https://docs.salvium.io/" target="_blank" rel="noopener noreferrer">
+              Read Docs
+            </a>
+            <a class="btn-ghost" href="https://github.com/salvium/salvium-gui" target="_blank" rel="noopener noreferrer">
+              Source
+            </a>
+          </div>
+          <div class="mt-5 flex flex-wrap justify-center gap-2">
+            <a class="os-chip" href="https://github.com/salvium/salvium-gui/releases/latest" target="_blank" rel="noopener noreferrer">Windows</a>
+            <a class="os-chip" href="https://github.com/salvium/salvium-gui/releases/latest" target="_blank" rel="noopener noreferrer">macOS</a>
+            <a class="os-chip" href="https://github.com/salvium/salvium-gui/releases/latest" target="_blank" rel="noopener noreferrer">Linux</a>
+          </div>
+          <p class="mt-5 text-xs text-white/55 leading-relaxed max-w-md mx-auto">
+            <strong class="text-yellow-200/85 font-semibold">macOS:</strong> the build is unsigned. If macOS reports it as &ldquo;damaged&rdquo;, open Terminal and run:
+            <code class="block mt-2 px-3 py-2 bg-black/40 rounded text-[#40E0D0] text-[11px] break-all font-mono">xattr -cr /Applications/salvium-wallet-gui.app</code>
+          </p>
+        </div>
+        <div class="product-visual">
+          <div class="relative z-10 flex flex-col items-center gap-3">
+            <div class="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 backdrop-blur flex items-center justify-center text-white">
+              <!-- Wallet icon -->
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 7V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-2"/><path d="M3 5v14"/><path d="M21 12V7H5a2 2 0 0 0 0 4h16v6"/></svg>
+            </div>
+            <div class="font-mono text-[11px] uppercase tracking-[0.22em] text-white/55">
+              Self-custodial · Open-source
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Salvium CLI -->
+      <div class="product-card h-full">
+        <div class="px-8 pt-10 pb-6 text-center">
+          <div class="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.22em] text-[color:var(--color-text-lighter)] font-mono">
+            <span class="w-1.5 h-1.5 rounded-full bg-[color:var(--color-neon)] shadow-[0_0_8px_#0AEB85]"></span>
+            CLI &amp; Node
+          </div>
+          <h3 class="mt-4 font-display text-2xl md:text-3xl font-semibold text-white">
+            Salvium CLI
+          </h3>
+          <p class="mt-3 text-white/65 max-w-md mx-auto">
+            Run a full node, mine, or script transactions from the terminal.
+            The reference implementation for builders and power users.
+          </p>
+          <div class="mt-6 flex flex-wrap justify-center gap-3">
+            <a class="btn-primary" href="https://docs.salvium.io/" target="_blank" rel="noopener noreferrer">
+              Read Docs
+            </a>
+            <a class="btn-ghost" href="https://github.com/salvium/salvium" target="_blank" rel="noopener noreferrer">
+              Source
+            </a>
+          </div>
+          <div class="mt-5 flex flex-wrap justify-center gap-2">
+            <a class="os-chip" href="https://github.com/salvium/salvium/releases/latest" target="_blank" rel="noopener noreferrer">Windows</a>
+            <a class="os-chip" href="https://github.com/salvium/salvium/releases/latest" target="_blank" rel="noopener noreferrer">macOS</a>
+            <a class="os-chip" href="https://github.com/salvium/salvium/releases/latest" target="_blank" rel="noopener noreferrer">Linux</a>
+          </div>
+        </div>
+        <div class="product-visual">
+          <div class="relative z-10 flex flex-col items-center gap-3">
+            <div class="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 backdrop-blur flex items-center justify-center text-white">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" x2="20" y1="19" y2="19"/></svg>
+            </div>
+            <div class="font-mono text-[11px] uppercase tracking-[0.22em] text-white/55">
+              salvium-wallet-cli
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

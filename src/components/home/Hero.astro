@@ -1,0 +1,46 @@
+---
+// Salvium hero — large display headline + supporting copy + CTAs + trust
+// indicators. The React rewrite has an animated "Private + Programmable =
+// Sovereign" equation; for the Astro version we render a static heading with
+// the gradient-text styling for the keyword. Animation can come back as a
+// React island later if the brand demands it.
+import { href } from '../../lib/href';
+---
+
+<section class="relative pt-28 md:pt-40 pb-24 md:pb-36 overflow-hidden">
+  <div class="max-w-7xl mx-auto px-5 lg:px-8">
+    <div class="text-center max-w-4xl mx-auto">
+      <div class="font-mono text-[11px] uppercase tracking-[0.32em] text-[color:var(--color-teal)] mb-6">
+        / Layer 1 · Privacy · Compliance · DeFi
+      </div>
+      <h1 class="font-display font-semibold tracking-[-0.025em] leading-[0.98] text-white"
+          style="font-size: clamp(2.75rem, 7vw, 5.75rem);">
+        The Future of <span class="gradient-text">Private DeFi</span>
+      </h1>
+      <p class="mt-7 text-lg md:text-xl text-white/70 max-w-2xl mx-auto leading-relaxed">
+        A Layer 1 blockchain that balances enhanced privacy with regulatory
+        compatibility, built for a sovereign programmable economy.
+      </p>
+      <div class="mt-10 flex flex-wrap items-center justify-center gap-3">
+        <a href={href('/about')} class="btn-primary">Get started</a>
+        <a href="https://docs.salvium.io/" target="_blank" rel="noopener noreferrer" class="btn-ghost">
+          Read the docs
+        </a>
+      </div>
+      <div class="mt-14 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm text-white/60">
+        <div class="flex items-center gap-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-[color:var(--color-teal)] shadow-[0_0_8px_#00BFA5]"></span>
+          Private
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-[color:var(--color-teal)] shadow-[0_0_8px_#00BFA5]"></span>
+          Compliant
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-[color:var(--color-teal)] shadow-[0_0_8px_#00BFA5]"></span>
+          Programmable
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

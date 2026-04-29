@@ -1,0 +1,53 @@
+---
+// Roadmap — four phases, vertically stacked on mobile, side-by-side on
+// desktop. Status chip uses different teal opacities to differentiate
+// completed / in-progress / upcoming.
+import { ROADMAP } from '../../data/seed.js';
+
+function statusLabel(s: string) {
+  if (s === 'completed')   return { text: 'Complete',    style: 'bg-[color:var(--color-teal)]/15 text-[color:var(--color-teal)] border-[color:var(--color-teal)]/30' };
+  if (s === 'in-progress') return { text: 'In progress', style: 'bg-[color:var(--color-accent-light)]/10 text-[color:var(--color-accent-light)] border-[color:var(--color-accent-light)]/30' };
+  return                          { text: 'Upcoming',    style: 'bg-white/[0.03] text-white/55 border-white/15' };
+}
+---
+
+<section id="roadmap" class="section-chapter relative py-20 md:py-32">
+  <div class="max-w-7xl mx-auto px-5 lg:px-8">
+    <div class="max-w-3xl">
+      <div class="font-mono text-[11px] uppercase tracking-[0.32em] text-[color:var(--color-teal)]">
+        / Roadmap
+      </div>
+      <h2 class="chapter-title mt-5">
+        Where Salvium<br>
+        is heading.
+      </h2>
+    </div>
+
+    <div class="mt-14 grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+      {ROADMAP.map((r, i) => {
+        const status = statusLabel(r.status);
+        return (
+          <div class="glass p-6 h-full flex flex-col">
+            <div class="flex items-center justify-between">
+              <span class="font-mono text-[10px] uppercase tracking-[0.22em] text-white/40">
+                {r.phase}
+              </span>
+              <span class={`text-[10px] font-mono uppercase tracking-[0.18em] px-2 py-1 rounded-full border ${status.style}`}>
+                {status.text}
+              </span>
+            </div>
+            <h3 class="mt-4 font-display text-lg font-semibold text-white">{r.title}</h3>
+            <ul class="mt-4 space-y-2 text-sm text-white/65 list-none p-0">
+              {r.bullets.map((b) => (
+                <li class="flex gap-2">
+                  <span class="text-[color:var(--color-teal)] mt-1">›</span>
+                  <span>{b}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</section>

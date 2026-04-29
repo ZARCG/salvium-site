@@ -1,0 +1,39 @@
+---
+// Privacy primitive flow — six chips wired together with hairline connectors,
+// rendered as a horizontal flow on desktop / vertical on mobile.
+import { PRIVACY_FLOW } from '../../data/seed.js';
+---
+
+<section class="section-chapter relative py-20 md:py-32">
+  <div class="max-w-7xl mx-auto px-5 lg:px-8">
+    <div class="max-w-3xl">
+      <div class="font-mono text-[11px] uppercase tracking-[0.32em] text-[color:var(--color-teal)]">
+        / How it works
+      </div>
+      <h2 class="chapter-title mt-5">
+        Privacy primitives,<br>
+        layered.
+      </h2>
+      <p class="mt-6 text-white/70 max-w-2xl text-lg leading-relaxed">
+        Salvium combines proven and novel cryptography to keep transactions
+        confidential by default — without sacrificing the ability to prove
+        what you choose to share.
+      </p>
+    </div>
+
+    <div class="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      {PRIVACY_FLOW.map((p, i) => (
+        <div class="glass p-5 card-hover">
+          <div class="flex items-center justify-between mb-3">
+            <span class="pill">{String(i + 1).padStart(2, '0')}</span>
+            <span class="font-mono text-[10px] uppercase tracking-[0.22em] text-white/40">
+              Layer
+            </span>
+          </div>
+          <h3 class="font-display text-lg font-semibold text-white">{p.name}</h3>
+          <p class="mt-2 text-sm text-white/60 leading-relaxed">{p.desc}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
