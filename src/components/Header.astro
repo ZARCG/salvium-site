@@ -30,7 +30,8 @@ const NAV_LINKS = [
 <header class="sticky top-0 z-40 border-b border-[color:var(--color-border)] bg-[color:var(--color-bg)]/85 backdrop-blur-sm">
   <nav class="max-w-7xl mx-auto px-5 lg:px-8 h-14 flex items-center justify-between gap-6">
     <a href={href('/')} class="flex items-center hover:opacity-90 transition-opacity" aria-label="Salvium home">
-      <Logo size="sm" />
+      <!-- 20% smaller than the default sm (h-7 = 28px). -->
+      <Logo className="!h-[22px]" />
     </a>
 
     <div class="hidden md:flex items-center gap-1 text-sm">
@@ -49,7 +50,13 @@ const NAV_LINKS = [
       ))}
     </div>
 
-    <a href={href('/donate')} class="btn-primary text-sm hidden sm:inline-flex">
+    <a
+      href={href('/donate')}
+      class="btn-primary hidden sm:inline-flex !text-[0.72rem] !py-[0.56rem] !px-[1.12rem]"
+    >
+      <!-- 20% smaller than .btn-primary defaults (font 0.9rem → 0.72rem,
+           padding 0.7/1.4rem → 0.56/1.12rem). The ! prefix raises Tailwind
+           specificity above the global class. -->
       Donate
     </a>
   </nav>

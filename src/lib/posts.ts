@@ -19,6 +19,8 @@ export interface ResolvedPost {
   href: string;
   /** Optional Jekyll-style legacy permalink for backward compat. */
   legacyHref: string | null;
+  /** Estimated reading time in minutes (200 wpm), minimum 1. */
+  readingMinutes: number;
 }
 
 const FILENAME_DATE_RE = /^(\d{4})-(\d{2})-(\d{2})-(.+)$/;
@@ -44,6 +46,7 @@ export function resolvePost(entry: CollectionEntry<'blog'>): ResolvedPost {
       category: pickCategory(entry),
       href: href(`/blog/${yyyy}/${mm}/${dd}/${entry.id}/`),
       legacyHref: null,
+      readingMinutes: readingMinutes(entry),
     };
   }
   const [, yyyy, mm, dd, slug] = m;
@@ -59,6 +62,7 @@ export function resolvePost(entry: CollectionEntry<'blog'>): ResolvedPost {
     category: pickCategory(entry),
     href: href(`/blog/${yyyy}/${mm}/${dd}/${slug}/`),
     legacyHref: null,
+    readingMinutes: readingMinutes(entry),
   };
 }
 
@@ -67,6 +71,16 @@ function pickCategory(entry: CollectionEntry<'blog'>): string {
   // Take the first token of whichever exists, default to "Update".
   const raw = entry.data.category || entry.data.categories || '';
   return raw.split(/[\s,]+/).filter(Boolean)[0] || 'Update';
+}
+
+function readingMinutes(entry: CollectionEntry<'blog'>): number {
+  // 200 wpm is the conventional read-time estimate for prose. The
+  // collection's body is the raw markdown including frontmatter-stripped
+  // content; that's close enough to a word count for a marketing site.
+  // Astro content entries expose the raw body via .body.
+  const text = (entry.body ?? '').replace(/[#*_`>!\-\[\]\(\)]/g, ' ');
+  const words = text.split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.round(words / 200));
 }
 
 export async function getResolvedPosts(): Promise<ResolvedPost[]> {
