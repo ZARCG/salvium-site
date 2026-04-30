@@ -37,14 +37,18 @@ const loop = [...ITEMS, ...ITEMS];
     from { transform: translateX(0); }
     to   { transform: translateX(-50%); }
   }
+  /* Animation duration controls how fast the track translates -50%
+     (i.e. through one full copy of the doubled list). Mobile viewports
+     are narrow, so a 28s duration left "ages" between new items entering
+     view. 16s feels closer to web/desktop perceived speed. */
   .marquee-track {
-    animation: marquee-scroll 45s linear infinite;
+    animation: marquee-scroll 38s linear infinite;
   }
   .marquee-track:hover {
     animation-play-state: paused;
   }
   @media (max-width: 768px) {
-    .marquee-track { animation-duration: 28s; }
+    .marquee-track { animation-duration: 16s; }
   }
   @media (prefers-reduced-motion: reduce) {
     .marquee-track { animation: none; }

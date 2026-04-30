@@ -127,15 +127,20 @@ body::before {
   pointer-events: none;
 }
 
-/* Display chapter heading scale */
+/* Display chapter heading scale — matches siko-ctrl's
+   text-4xl sm:text-5xl md:text-6xl lg:text-7xl exactly so headings sit
+   wide rather than stacking onto extra lines. */
 .chapter-title {
   font-family: 'Poppins', system-ui, sans-serif;
   font-weight: 600;
-  letter-spacing: -0.025em;
-  line-height: 0.98;
-  font-size: clamp(2.5rem, 6.5vw, 5.75rem);
+  letter-spacing: -0.02em;
+  line-height: 1.02;
+  font-size: 2.25rem;
   color: #fff;
 }
+@media (min-width: 640px)  { .chapter-title { font-size: 3rem; } }
+@media (min-width: 768px)  { .chapter-title { font-size: 3.75rem; } }
+@media (min-width: 1024px) { .chapter-title { font-size: 4.5rem; } }
 
 /* Editorial card */
 .s-card {
