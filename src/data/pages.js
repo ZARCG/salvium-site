@@ -17,12 +17,12 @@ export const ABOUT_CONTENT = {
     {
       title: 'Mining Specifications',
       body:
-        'Salvium utilizes the RandomX algorithm with a 120-second block time and a block reward of 83.8265 SAL. Our dynamic difficulty adjustment ensures network stability and fair mining opportunities for all participants.',
+        'Salvium utilizes the RandomX algorithm with a 120-second block time and a block reward of 123.825 SAL. Our dynamic difficulty adjustment ensures network stability and fair mining opportunities for all participants.',
     },
     {
       title: 'Staking Mechanism',
       body:
-        "Salvium's staking system requires users to lock their SAL tokens for approximately 30 days (21,600 blocks) to earn rewards. During the initial phase, 15% of block rewards are distributed proportionally among all active stakers. This approach supports a stable network and rewards long-term holders, forming the foundation of a sustainable token economy. In the future, Salvium aims to introduce private DeFi features that generate yields.",
+        "Salvium's staking system requires users to lock their SAL tokens for approximately 30 days (21,600 blocks) to earn rewards. During the initial phase, 20% of block rewards are distributed proportionally among all active stakers. This approach supports a stable network and rewards long-term holders, forming the foundation of a sustainable token economy. In the future, Salvium aims to introduce private DeFi features that generate yields.",
     },
     {
       title: 'Security & Compliance',
@@ -55,7 +55,7 @@ export const ABOUT_CONTENT = {
       },
     ],
     footnote:
-      'Note: Percentages refer to the capped 184M SAL supply and exclude tail emissions, which continue beyond the cap to support long-term miner incentives.',
+      'Note: Percentages refer to the capped 184.4M SAL supply and exclude tail emissions, which continue beyond the cap to support long-term miner incentives.',
   },
 }
 
@@ -94,7 +94,7 @@ export const FAQ_CONTENT = [
       },
       {
         q: 'Was there a pre-mine for Salvium, and if so, what was its purpose?',
-        a: "Yes, Salvium had a 12.01% pre-mine. This pre-mine serves two main purposes: Build (3.5%) — allocated as incentives for early developers and contributors to support the project's launch; Operations (8.48%) — set aside for ongoing development, enhancements, and new feature implementation, with these tokens time-locked and released over 24 monthly installments. The pre-mine is crucial for funding the project's development and ensuring its long-term sustainability.",
+        a: "Yes, Salvium had a 12.01% pre-mine. This pre-mine serves two main purposes: Build (3.53%) — allocated as incentives for early developers and contributors to support the project's launch; Operations (8.48%) — set aside for ongoing development, enhancements, and new feature implementation, with these tokens time-locked and released over 24 monthly installments. The pre-mine is crucial for funding the project's development and ensuring its long-term sustainability.",
       },
     ],
   },
@@ -120,7 +120,7 @@ export const FAQ_CONTENT = [
     items: [
       {
         q: 'How does staking work in Salvium?',
-        a: 'Staking in Salvium allows users to lock their SAL tokens to earn rewards. Stakers receive 15% of the block reward, distributed proportionally among all active stakers based on their staked amount.',
+        a: 'Staking in Salvium allows users to lock their SAL tokens to earn rewards. Stakers receive 20% of the block reward, distributed proportionally among all active stakers based on their staked amount.',
       },
       {
         q: 'What is the "protocol_tx" feature in Salvium?',

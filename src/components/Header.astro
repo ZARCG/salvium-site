@@ -92,7 +92,7 @@ function resolveItem(item: NavItem) {
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-chevron transition-transform"><polyline points="6 9 12 15 18 9"/></svg>
           </button>
           <div class="nav-dropdown-wrap absolute top-full left-0 pt-2 invisible opacity-0 transition-opacity duration-150" aria-hidden="true">
-            <div class="nav-dropdown rounded-2xl p-2 min-w-[220px] glow-border">
+            <div class="nav-dropdown rounded-2xl p-2 min-w-[220px] glow-border" role="menu">
               {g.items.map((it) => {
                 const r = resolveItem(it);
                 return r.external ? (
@@ -100,6 +100,7 @@ function resolveItem(item: NavItem) {
                     href={r.url}
                     target="_blank"
                     rel="noopener noreferrer"
+                    role="menuitem"
                     class="flex items-center justify-between gap-3 px-3 py-2 rounded-xl text-sm text-white/85 hover:bg-[color:var(--color-teal)]/10 hover:text-white"
                   >
                     <span>{it.label}</span>
@@ -108,6 +109,7 @@ function resolveItem(item: NavItem) {
                 ) : (
                   <a
                     href={r.url}
+                    role="menuitem"
                     class="flex items-center justify-between gap-3 px-3 py-2 rounded-xl text-sm text-white/85 hover:bg-[color:var(--color-teal)]/10 hover:text-white"
                   >
                     <span>{it.label}</span>
@@ -221,6 +223,18 @@ function resolveItem(item: NavItem) {
     transform: rotate(180deg);
   }
 
+  /* Dropdown panel — solid teal-tinted dark surface (doesn't rely on
+     backdrop-filter because some sections set a transform that breaks
+     fixed-element backdrops, leaving the panel transparent over hero
+     text). Matches siko-ctrl's nav-dropdown class.  */
+  .nav-dropdown {
+    background: rgba(14, 14, 14, 0.96);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 191, 165, 0.15);
+    box-shadow: 0 12px 36px -8px rgba(0, 0, 0, 0.6);
+  }
+
   /* Mobile drawer */
   #mobile-drawer {
     position: fixed;
@@ -263,7 +277,11 @@ function resolveItem(item: NavItem) {
   }
   #mobile-drawer .drawer-link {
     display: block;
-    padding: 0.75rem 1rem;
+    /* Tap-target floor: iOS HIG + Material both want 44px minimum.
+       py-3 + 1rem font + line-height puts top-level rows at ~48px and
+       sub-links at ~44px, comfortably above the threshold. */
+    padding: 0.85rem 1rem;
+    min-height: 44px;
     border-radius: 0.5rem;
     font-size: 1rem;
     font-weight: 500;
@@ -276,7 +294,8 @@ function resolveItem(item: NavItem) {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0.75rem 1rem;
+    padding: 0.85rem 1rem;
+    min-height: 44px;
     border-radius: 0.5rem;
     font-size: 1rem;
     font-weight: 500;
@@ -300,7 +319,12 @@ function resolveItem(item: NavItem) {
   #mobile-drawer .drawer-sublink {
     font-size: 0.9rem;
     color: rgba(255, 255, 255, 0.7);
-    padding: 0.55rem 0.85rem;
+    /* Sub-link rows still hit 44px via min-height inherited from the
+       parent .drawer-link rule above. */
+    padding: 0.7rem 0.85rem;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
   }
   #mobile-drawer .drawer-cta {
     flex: 0 0 auto;
@@ -372,7 +396,19 @@ function resolveItem(item: NavItem) {
       iconOpen?.classList.toggle('hidden', open);
       iconClose?.classList.toggle('hidden', !open);
       document.body.style.overflow = open ? 'hidden' : '';
+      // Mark the drawer inert when closed so its links/buttons aren't
+      // tab-reachable from the page underneath. inert is supported in
+      // every modern browser; older agents fall back to ignoring it
+      // (visibility:hidden in our CSS already removes them from the AT
+      // tree, so the only behaviour gained here is keyboard tab-out).
+      if (open) {
+        drawer.removeAttribute('inert');
+      } else {
+        drawer.setAttribute('inert', '');
+      }
     }
+    // Initial state: drawer is closed, so make it inert from page load.
+    drawer.setAttribute('inert', '');
     toggle.addEventListener('click', () => {
       setOpen(toggle.getAttribute('aria-expanded') !== 'true');
     });

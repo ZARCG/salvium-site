@@ -58,8 +58,8 @@ export const PRIVACY_FLOW = [
 
 export const STATS = [
   { label: 'Block time', value: '120', suffix: 's' },
-  { label: 'Block reward', value: '83.8265', suffix: 'SAL' },
-  { label: 'Staker share', value: '15', suffix: '%' },
+  { label: 'Block reward', value: '123.825', suffix: 'SAL' },
+  { label: 'Staker share', value: '20', suffix: '%' },
   { label: 'Stake lock', value: '21,600', suffix: 'blocks · ~30d' },
   { label: 'Capped supply', value: '184.4M', suffix: 'SAL' },
   { label: 'Algorithm', value: 'RandomX', suffix: 'PoW' },
