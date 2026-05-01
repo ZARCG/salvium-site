@@ -9,7 +9,6 @@
 // already provides the ambient teal glow; we add the cinematic vignette
 // here scoped to the hero only.
 import { href } from '../../lib/href';
-import NodeNetwork from '../islands/NodeNetwork.tsx';
 ---
 
 <section id="top" class="hero-section relative min-h-[100svh] flex items-center pt-24 pb-20 overflow-hidden">
@@ -22,12 +21,6 @@ import NodeNetwork from '../islands/NodeNetwork.tsx';
       <span class="beam beam-3"></span>
       <span class="beam beam-4"></span>
       <span class="beam beam-5"></span>
-    </div>
-    <!-- Animated node network. React island, hydrated only in the browser
-         and only when the hero is in view (client:visible). The canvas
-         scales to its container so it sits behind the hero content. -->
-    <div class="absolute inset-0 opacity-60 mix-blend-screen pointer-events-none">
-      <NodeNetwork client:visible />
     </div>
     <div class="pointer-events-none absolute inset-0" style="background: radial-gradient(55% 60% at 50% 50%, rgba(0,0,0,0.55) 0%, transparent 75%);"></div>
     <div class="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#0a0a0a] via-transparent to-[#0a0a0a]"></div>
