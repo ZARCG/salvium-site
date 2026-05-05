@@ -158,6 +158,15 @@ function resolveItem(item: NavItem) {
   <!-- Mobile drawer — accordion-style with the same NAV_GROUPS plus Blog,
        Roadmap, Download CTA. -->
   <div id="mobile-drawer" class="lg:hidden" role="dialog" aria-modal="true" aria-label="Site menu">
+    <!-- Close button rendered inside the drawer (in addition to the
+         hamburger-toggle in the header) so users on tall mobile pages
+         have an obvious dismiss control without reaching back up to
+         the header bar. -->
+    <button type="button" id="mobile-drawer-close" class="drawer-close" aria-label="Close menu">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
     <nav class="drawer-nav" aria-label="Mobile primary">
       <ul>
         {NAV_GROUPS.map((g) => (
@@ -333,6 +342,36 @@ function resolveItem(item: NavItem) {
     padding: 0 1rem 1.25rem;
     padding-bottom: calc(1.25rem + env(safe-area-inset-bottom));
   }
+
+  /* Close button in the top-right of the drawer. Sits inside the
+     header-reserved 4rem padding-top so it floats over the drawer
+     backdrop without overlapping any nav content. Larger tap target
+     (44px) than the header hamburger so it's easy to hit one-handed. */
+  #mobile-drawer .drawer-close {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 44px;
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.75rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: rgba(255, 255, 255, 0.85);
+    transition: background 150ms ease, color 150ms ease, border-color 150ms ease;
+    z-index: 2;
+  }
+  #mobile-drawer .drawer-close:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.22);
+  }
+  #mobile-drawer .drawer-close:focus-visible {
+    outline: 2px solid var(--color-teal);
+    outline-offset: 2px;
+  }
 </style>
 
 <script is:inline>
@@ -415,6 +454,9 @@ function resolveItem(item: NavItem) {
       setOpen(toggle.getAttribute('aria-expanded') !== 'true');
     });
     drawer.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+    // Explicit close button inside the drawer (in addition to closing
+    // when the user taps any link or the header hamburger).
+    document.getElementById('mobile-drawer-close')?.addEventListener('click', () => setOpen(false));
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         setOpen(false);
