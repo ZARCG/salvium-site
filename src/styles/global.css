@@ -485,7 +485,25 @@ body::before {
   0% { opacity: 0; transform: translateY(24px); }
   100% { opacity: 1; transform: translateY(0); }
 }
-.in-view { animation: fadeUp 0.8s ease-out both; }
+
+/* Reveal-on-scroll wrapper — global so there's no Astro CSS-scoping
+   ambiguity between the wrapper class set in Reveal.astro and the
+   .in-view class toggled by Layout.astro's observer script. Without
+   this cascade being unambiguous the FinalCTA section (and any other
+   <Reveal>-wrapped block) can stay at opacity: 0 forever. */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 800ms ease-out, transform 800ms ease-out;
+  will-change: opacity, transform;
+}
+.reveal.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+}
 
 @keyframes floaty {
   0%,100% { transform: translateY(0); }

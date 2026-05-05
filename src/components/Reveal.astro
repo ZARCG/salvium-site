@@ -19,22 +19,9 @@ const { delay = 0, class: className = '' } = Astro.props;
 const style = delay ? `transition-delay: ${delay}ms` : undefined;
 ---
 
+<!-- The .reveal / .reveal.in-view rules live in global.css to avoid Astro's
+     per-component CSS scoping interfering with the .in-view class added at
+     runtime by Layout.astro's IntersectionObserver. -->
 <div class={`reveal ${className}`} style={style}>
   <slot />
 </div>
-
-<style>
-  .reveal {
-    opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 800ms ease-out, transform 800ms ease-out;
-    will-change: opacity, transform;
-  }
-  .reveal.in-view {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .reveal { opacity: 1; transform: none; transition: none; }
-  }
-</style>
