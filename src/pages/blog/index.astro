@@ -8,6 +8,7 @@ import Layout from '../../layouts/Layout.astro';
 import PageHero from '../../components/PageHero.astro';
 import BlogCover from '../../components/BlogCover.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
+import FinalCTA from '../../components/home/FinalCTA.astro';
 import { getResolvedPosts } from '../../lib/posts';
 
 const posts = await getResolvedPosts();
@@ -138,6 +139,8 @@ const categories = ['All', ...Object.keys(categoryCounts).sort()];
       </div>
     </div>
   </section>
+
+  <FinalCTA />
 </Layout>
 
 <!-- Client-side filter + search. Vanilla JS keeps the page weight near

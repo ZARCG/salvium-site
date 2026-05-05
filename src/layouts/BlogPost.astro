@@ -17,6 +17,7 @@ import Layout from './Layout.astro';
 import PageHero from '../components/PageHero.astro';
 import BlogCover from '../components/BlogCover.astro';
 import FormattedDate from '../components/FormattedDate.astro';
+import FinalCTA from '../components/home/FinalCTA.astro';
 import { href } from '../lib/href';
 
 interface Props {
@@ -76,4 +77,6 @@ const { title, description, date, category, image, readingMinutes } = Astro.prop
       </div>
     </div>
   </section>
+
+  <FinalCTA />
 </Layout>

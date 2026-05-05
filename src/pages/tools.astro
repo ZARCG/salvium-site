@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import PageHero from '../components/PageHero.astro';
+import FinalCTA from '../components/home/FinalCTA.astro';
 import { TOOLS_CONTENT } from '../data/pages.js';
 
 // TOOLS_CONTENT has multiple top-level groupings (trackers, mining, others...).
@@ -41,4 +42,6 @@ const groupLabel = {
       ))}
     </div>
   </section>
+
+  <FinalCTA />
 </Layout>

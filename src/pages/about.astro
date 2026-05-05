@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import PageHero from '../components/PageHero.astro';
+import FinalCTA from '../components/home/FinalCTA.astro';
 import { ABOUT_CONTENT } from '../data/pages.js';
 
 const dist = ABOUT_CONTENT.distribution;
@@ -49,4 +50,6 @@ const dist = ABOUT_CONTENT.distribution;
       </div>
     </section>
   )}
+
+  <FinalCTA />
 </Layout>
